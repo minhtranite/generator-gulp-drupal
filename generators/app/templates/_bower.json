@@ -1,0 +1,11 @@
+{
+  "name": "gulp-drupal",
+  "description": "Drupal theme with Gulp.",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
