@@ -1,11 +1,12 @@
 {
-  "name": "gulp-drupal",
+  "name": "<%= name %>",
   "version": "1.0.0",
-  "description": "Drupal theme with Gulp.",
+  "description": "<%= description %>",
   "scripts": {
     "start": "NODE_ENV=development gulp start",
     "build": "NODE_ENV=production gulp build"
   },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-eslint": "^6.0.2",

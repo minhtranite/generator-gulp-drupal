@@ -1,6 +1,6 @@
 {
   "name": "generator-gulp-drupal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Drupal theme with Gulp, Babel, PostCSS, UglifyJS, Imagemin, Browser sync.",
   "homepage": "",
   "author": {

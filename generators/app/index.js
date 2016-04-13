@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path = require('path');
 
 module.exports = yeoman.Base.extend({
 
@@ -17,7 +18,7 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'name',
         message: 'Your project name',
-        default: this.appname
+        default: path.basename(this.destinationRoot())
       },
       {
         type: 'input',
@@ -29,7 +30,7 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'devURL',
         message: 'Your project devURL ?',
-        default: this.appname + '.local'
+        default: path.basename(this.destinationRoot()) + '.local'
       }
     ];
 
@@ -40,15 +41,18 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function () {
-    this.fs.directory('src', 'src');
+    this.fs.copy(
+      this.templatePath('src'),
+      this.destinationPath('src')
+    );
     this.fs.copyTpl(
       this.templatePath('_bower.json'),
       this.destinationPath('bower.json'),
       this.props
     );
     this.fs.copyTpl(
-      this.templatePath('_gulpfile.babel'),
-      this.destinationPath('gulpfile.babel'),
+      this.templatePath('_gulpfile.babel.js'),
+      this.destinationPath('gulpfile.babel.js'),
       this.props
     );
     this.fs.copyTpl(

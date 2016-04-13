@@ -1,6 +1,7 @@
 {
-  "name": "gulp-drupal",
-  "description": "Drupal theme with Gulp.",
+  "name": "<%= name %>",
+  "version": "1.0.0",
+  "description": "<%= description %>",
   "ignore": [
     "**/.*",
     "node_modules",
