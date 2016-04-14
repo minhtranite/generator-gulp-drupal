@@ -64,6 +64,11 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('package.json'),
       this.props
     );
+    this.fs.copyTpl(
+      this.templatePath('_template.php'),
+      this.destinationPath('template.php'),
+      this.props
+    );
     this.fs.copy(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc')

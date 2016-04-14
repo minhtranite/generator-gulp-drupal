@@ -74,7 +74,8 @@ gulp.task('styles', () => {
       })
     ])))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/styles'));
+    .pipe(gulp.dest('dist/styles'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('images', () => {
@@ -97,24 +98,18 @@ gulp.task('clean', () => {
 });
 
 gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
-  browserSync({
-    files: [
-      'dist/styles/**/*.css',
-      'dist/scripts/**/*js',
-      'dist/fonts/**/*',
-      'dist/images/**/*',
-      'templates/*.tpl.php'
-    ],
+  browserSync.init({
     proxy: {
       target: '<%= drupalURL %>',
       ws: true
     }
   });
 
-  gulp.watch(['src/scripts/**/*.js'], ['lint', 'scripts']);
+  gulp.watch(['src/scripts/**/*.js'], ['lint', 'scripts', browserSync.reload]);
   gulp.watch(['src/styles/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['src/images/**/*'], ['images']);
-  gulp.watch(['src/fonts/**/*'], ['fonts']);
+  gulp.watch(['src/images/**/*'], ['images', browserSync.reload]);
+  gulp.watch(['src/fonts/**/*'], ['fonts', browserSync.reload]);
+  gulp.watch(['templates/*.tpl.php'], [browserSync.reload]);
   gulp.watch(['package.json', 'bower.json'], ['removeVendorInfoFile']);
 });
 
