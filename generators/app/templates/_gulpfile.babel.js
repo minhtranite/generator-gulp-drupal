@@ -115,6 +115,7 @@ gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
   gulp.watch(['src/styles/**/*.{scss,css}'], ['styles']);
   gulp.watch(['src/images/**/*'], ['images']);
   gulp.watch(['src/fonts/**/*'], ['fonts']);
+  gulp.watch(['package.json', 'bower.json'], ['removeVendorInfoFile']);
 });
 
 gulp.task('build', (callback) => {
