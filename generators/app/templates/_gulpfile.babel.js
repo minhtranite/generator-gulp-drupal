@@ -109,7 +109,7 @@ gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
   gulp.watch(['src/styles/**/*.{scss,css}'], ['styles']);
   gulp.watch(['src/images/**/*'], ['images', browserSync.reload]);
   gulp.watch(['src/fonts/**/*'], ['fonts', browserSync.reload]);
-  gulp.watch(['templates/*.tpl.php'], [browserSync.reload]);
+  gulp.watch(['templates/**/*.tpl.php'], [browserSync.reload]);
   gulp.watch(['package.json', 'bower.json'], ['removeVendorInfoFile']);
 });
 
