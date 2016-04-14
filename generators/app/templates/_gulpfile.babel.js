@@ -106,7 +106,7 @@ gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
       'templates/*.tpl.php'
     ],
     proxy: {
-      target: '<%= devURL %>',
+      target: '<%= drupalURL %>',
       ws: true
     }
   });

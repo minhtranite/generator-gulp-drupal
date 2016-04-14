@@ -28,8 +28,8 @@ module.exports = yeoman.Base.extend({
       },
       {
         type: 'input',
-        name: 'devURL',
-        message: 'Your project devURL ?',
+        name: 'drupalURL',
+        message: 'Your Drupal project URL (BrowserSync proxy target)',
         default: path.basename(this.destinationRoot()) + '.local'
       }
     ];
