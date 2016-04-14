@@ -93,7 +93,7 @@ gulp.task('fonts', () => {
 });
 
 gulp.task('clean', () => {
-  return del(['dist/*'], {dot: true});
+  del.sync(['dist/*'], {dot: true});
 });
 
 gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
@@ -119,4 +119,12 @@ gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
 
 gulp.task('build', (callback) => {
   runSequence('clean', 'scripts', 'styles', 'images', 'fonts', callback);
+});
+
+gulp.task('removeVendorInfoFile', () => {
+  del.sync(['node_modules/**/*.info', 'bower_components/**/*.info']);
+});
+
+gulp.task('postInstall', (callback) => {
+  runSequence('removeVendorInfoFile', 'build', callback);
 });

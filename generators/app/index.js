@@ -69,8 +69,16 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('.babelrc')
     );
     this.fs.copy(
+      this.templatePath('bowerrc'),
+      this.destinationPath('.bowerrc')
+    );
+    this.fs.copy(
       this.templatePath('eslintrc'),
       this.destinationPath('.eslintrc')
+    );
+    this.fs.copy(
+      this.templatePath('npmrc'),
+      this.destinationPath('.npmrc')
     );
   },
 
