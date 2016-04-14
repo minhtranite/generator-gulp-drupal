@@ -50,6 +50,10 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('bower.json'),
       this.props
     );
+    this.fs.copy(
+      this.templatePath('_GULP_DRUPAL.md'),
+      this.destinationPath('GULP_DRUPAL.md')
+    );
     this.fs.copyTpl(
       this.templatePath('_gulpfile.babel.js'),
       this.destinationPath('gulpfile.babel.js'),
