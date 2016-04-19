@@ -1,7 +1,7 @@
 {
   "name": "generator-gulp-drupal",
   "version": "1.0.0",
-  "description": "Drupal theme with Gulp, Babel, PostCSS, UglifyJS, Imagemin, Browser sync.",
+  "description": "Drupal theme with Gulp, Babel, UglifyJS, PostCSS,  Imagemin, BrowserSync.",
   "homepage": "",
   "author": {
     "name": "Minh Tran",

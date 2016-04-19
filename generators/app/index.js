@@ -25,7 +25,7 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'description',
         message: 'Your project description',
-        default: 'Drupal theme with Gulp, Babel, PostCSS, UglifyJS, Imagemin, Browser sync.'
+        default: 'Drupal theme with Gulp, Babel, UglifyJS, PostCSS,  Imagemin, BrowserSync.'
       },
       {
         type: 'input',
