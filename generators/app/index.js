@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 module.exports = yeoman.Base.extend({
 
@@ -49,10 +50,9 @@ module.exports = yeoman.Base.extend({
       this.templatePath('src'),
       this.destinationPath('src')
     );
-    this.fs.copy(
-      this.templatePath('templates'),
-      this.destinationPath('templates')
-    );
+    mkdirp.sync(this.destinationPath('src/images'));
+    mkdirp.sync(this.destinationPath('src/fonts'));
+    mkdirp.sync(this.destinationPath('templates'));
     this.fs.copyTpl(
       this.templatePath('_bower.json'),
       this.destinationPath('bower.json'),
