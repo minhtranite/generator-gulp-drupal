@@ -4,6 +4,7 @@
   "description": "<%= description %>",
   "scripts": {
     "start": "NODE_ENV=development gulp start",
+    "start-prod": "NODE_ENV=production gulp start",
     "build": "NODE_ENV=production gulp build",
     "postinstall": "gulp postInstall"
   },

@@ -18,12 +18,13 @@ import runSequence from 'run-sequence';
 
 const ENV = process.env.NODE_ENV || 'development';
 const PROD = ENV === 'production';
+const bs = browserSync.create();
 
 gulp.task('lint', () => {
   return gulp.src(['src/scripts/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(gIf(!browserSync.active, eslint.failOnError()));
+    .pipe(gIf(PROD, eslint.failOnError()));
 });
 
 gulp.task('scripts', () => {
@@ -45,6 +46,27 @@ gulp.task('scripts', () => {
 
 gulp.task('styles', () => {
   let cssFilter = filter('**/*.css');
+  let postCSSPlugins = [
+    autoprefixer({
+      browsers: [
+        'ie >= 10',
+        'ie_mob >= 10',
+        'ff >= 30',
+        'chrome >= 34',
+        'safari >= 7',
+        'opera >= 23',
+        'ios >= 7',
+        'android >= 4.4',
+        'bb >= 10'
+      ]
+    })
+  ];
+  if (PROD) {
+    postCSSPlugins.push(cssnano({
+      safe: true,
+      discardComments: {removeAll: true}
+    }));
+  }
   return gulp.src([
       'src/styles/**/*.scss',
       'src/styles/**/*.css',
@@ -54,32 +76,14 @@ gulp.task('styles', () => {
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
     .pipe(cssFilter)
-    .pipe(gIf(PROD, postcss([
-      autoprefixer({
-        browsers: [
-          'ie >= 10',
-          'ie_mob >= 10',
-          'ff >= 30',
-          'chrome >= 34',
-          'safari >= 7',
-          'opera >= 23',
-          'ios >= 7',
-          'android >= 4.4',
-          'bb >= 10'
-        ]
-      }),
-      cssnano({
-        safe: true,
-        discardComments: {removeAll: true}
-      })
-    ])))
+    .pipe(postcss(postCSSPlugins))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist/styles'))
-    .pipe(browserSync.stream());
+    .pipe(bs.stream({match: '**/*.css'}));
 });
 
 gulp.task('images', () => {
-  return gulp.src(['src/images/**/*'])
+  return gulp.src(['src/images/**/*.{jpg,png,gif,svg}'])
     .pipe(gIf(PROD, cache(imagemin({
       progressive: true,
       interlaced: true
@@ -88,33 +92,33 @@ gulp.task('images', () => {
 });
 
 gulp.task('fonts', () => {
-  return gulp.src(['src/fonts/**/*'])
+  return gulp.src(['src/fonts/**/*.{ttf,eot,svg,woff,woff2}'])
     .pipe(newer('dist/fonts'))
     .pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('clean', () => {
-  del.sync(['dist/*'], {dot: true});
+  del.sync(['dist/*', '!dist/README.md'], {dot: true});
 });
 
-gulp.task('start', ['scripts', 'styles', 'images', 'fonts'], () => {
-  browserSync.init({
+gulp.task('build', (callback) => {
+  runSequence('clean', 'scripts', 'styles', 'images', 'fonts', callback);
+});
+
+gulp.task('start', ['build'], () => {
+  bs.init({
     proxy: {
       target: '<%= drupalURL %>',
       ws: true
     }
   });
 
-  gulp.watch(['src/scripts/**/*.js'], ['lint', 'scripts', browserSync.reload]);
+  gulp.watch(['src/scripts/**/*.js'], ['lint', 'scripts', bs.reload]);
   gulp.watch(['src/styles/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['src/images/**/*'], ['images', browserSync.reload]);
-  gulp.watch(['src/fonts/**/*'], ['fonts', browserSync.reload]);
-  gulp.watch(['templates/**/*.tpl.php'], [browserSync.reload]);
+  gulp.watch(['src/images/**/*.{jpg,png,gif,svg}'], ['images', bs.reload]);
+  gulp.watch(['src/fonts/**/*.{ttf,eot,svg,woff,woff2}'], ['fonts', bs.reload]);
+  gulp.watch(['templates/**/*.tpl.php'], bs.reload);
   gulp.watch(['package.json', 'bower.json'], ['removeVendorInfoFile']);
-});
-
-gulp.task('build', (callback) => {
-  runSequence('clean', 'scripts', 'styles', 'images', 'fonts', callback);
 });
 
 gulp.task('removeVendorInfoFile', () => {
