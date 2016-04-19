@@ -126,5 +126,5 @@ gulp.task('removeVendorInfoFile', () => {
 });
 
 gulp.task('postInstall', (callback) => {
-  runSequence('removeVendorInfoFile', 'build', callback);
+  runSequence('removeVendorInfoFile', callback);
 });
