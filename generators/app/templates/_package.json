@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "<%= description %>",
   "scripts": {
-    "start": "NODE_ENV=development gulp start",
-    "start-prod": "NODE_ENV=production gulp start",
+    "start:dev": "NODE_ENV=development gulp start",
+    "start:prod": "NODE_ENV=production gulp start",
+    "start": "npm run start:prod",
     "build": "NODE_ENV=production gulp build",
     "postinstall": "gulp postInstall"
   },

@@ -20,13 +20,13 @@ yo gulp-drupal
 ### Dev
 
 ```bash
-npm run start
+npm run start:dev
 ```
 
 **Product mode**
 
 ```bash
-npm run start-prod
+npm run start:prod
 ```
 
 ### Build
