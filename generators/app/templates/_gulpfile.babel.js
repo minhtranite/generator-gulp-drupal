@@ -24,7 +24,7 @@ gulp.task('lint', () => {
   return gulp.src(['src/scripts/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(gIf(PROD, eslint.failOnError()));
+    .pipe(gIf(!bs.instance.active, eslint.failOnError()));
 });
 
 gulp.task('scripts', () => {
