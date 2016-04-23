@@ -4,6 +4,7 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
 var mkdirp = require('mkdirp');
+var snakecase = require('lodash.snakecase');
 
 module.exports = yeoman.Base.extend({
 
@@ -14,12 +15,14 @@ module.exports = yeoman.Base.extend({
       'Welcome to the slick ' + chalk.red('generator-gulp-drupal') + ' generator!'
     ));
 
+    var currentDirName = path.basename(this.destinationRoot());
+    var defaultName = snakecase(currentDirName);
     var prompts = [
       {
         type: 'input',
         name: 'name',
-        message: 'Your project name',
-        default: path.basename(this.destinationRoot())
+        message: 'Your project name (Auto convert to Snake case)',
+        default: defaultName
       },
       {
         type: 'input',
@@ -31,7 +34,7 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'drupalURL',
         message: 'Your Drupal project URL (BrowserSync proxy target)',
-        default: path.basename(this.destinationRoot()) + '.local'
+        default: defaultName + '.local'
       }
     ];
 
