@@ -1,6 +1,6 @@
 (function ($, Drupal) {
   Drupal.behaviors.sample = {
-    attach: function () {
+    attach: () => {
       let sampleVar = 'ES6 here';
       console.log(sampleVar);
     }
